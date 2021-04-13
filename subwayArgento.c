@@ -14,8 +14,14 @@ pthread_mutex_t salida_mutex;
 
 //creo estructura de semaforos 
 struct semaforos {
-    sem_t sem_mezclar;
-	//poner demas semaforos aqui
+	sem_t sem_mezclar;
+	sem_t sem_salar;
+	sem_t sem_agregar_a_mezcla;
+	sem_t sem_empanar;
+	sem_t sem_cocinar;
+	sem_t armar_sandwich_milanesa;
+	sem_t armar_sandwich_pan;
+	sem_t armar_sandwich_extras;
 };
 
 //creo los pasos con los ingredientes

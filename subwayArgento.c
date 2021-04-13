@@ -12,6 +12,9 @@ pthread_mutex_t salero_mutex;
 sem_t sem_horno;
 pthread_mutex_t salida_mutex;
 
+int ganadores[4];
+int indice_ganador;
+
 //creo estructura de semaforos 
 struct semaforos {
 	sem_t sem_mezclar;
@@ -28,7 +31,6 @@ struct semaforos {
 struct paso {
    char accion [LIMITE];
    char ingredientes[4][LIMITE];
-   
 };
 
 //creo los parametros de los hilos 

@@ -5,8 +5,12 @@
 #include <semaphore.h>  // para usar semaforos
 #include <unistd.h>
 
-
 #define LIMITE 50
+
+pthread_mutex_t sarten_mutex;
+pthread_mutex_t salero_mutex;
+sem_t sem_horno;
+pthread_mutex_t salida_mutex;
 
 //creo estructura de semaforos 
 struct semaforos {

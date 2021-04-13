@@ -1,0 +1,9 @@
+Picar-2 dientes de ajo|puñado de perejil
+Mezclar-provenzal|huevo
+Salar-mezcla
+Agregar a mezcla-carne
+Empanar-mezcla con carne
+Cocinar-milanesa
+Hornear-pan
+Cortar-lechuga|tomate|cebolla morada|pepino
+Armar sandwich-milanesa|pan|extras picados

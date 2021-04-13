@@ -54,6 +54,18 @@ void* realizarAccion(int equipo, char *accionIn, char *ingrediente, FILE* salida
 	pthread_mutex_unlock(&salida_mutex);
 }
 
+void *accionTerminada(void *data, char *accionIn) {
+	pthread_mutex_lock(&salida_mutex);
+	struct parametro *mydata = data;
+	char buffer[128];
+	snprintf(buffer, sizeof(buffer), "Equipo : %d, Terminado : %s\n", mydata->equipo_param, accionIn);
+	mydata->resultado = fopen("resultado.txt", "at");
+	fprintf(mydata->resultado, "%s\n", buffer);
+	fclose(mydata->resultado);
+	printf("%s\n", buffer);
+	pthread_mutex_unlock(&salida_mutex);
+}
+
 //funcion para tomar de ejemplo
 void* cortar(void *data) {
 	//creo el nombre de la accion de la funcion 

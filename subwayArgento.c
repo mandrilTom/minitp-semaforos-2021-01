@@ -43,29 +43,15 @@ struct parametro {
 };
 
 //funcion para imprimir las acciones y los ingredientes de la accion
-void* imprimirAccion(void *data, char *accionIn) {
-	struct parametro *mydata = data;
-	//calculo la longitud del array de pasos 
-	int sizeArray = (int)( sizeof(mydata->pasos_param) / sizeof(mydata->pasos_param[0]));
-	//indice para recorrer array de pasos 
-	int i;
-	for(i = 0; i < sizeArray; i ++){
-		//pregunto si la accion del array es igual a la pasada por parametro (si es igual la funcion strcmp devuelve cero)
-		if(strcmp(mydata->pasos_param[i].accion, accionIn) == 0){
-		printf("\tEquipo %d - accion %s \n " , mydata->equipo_param, mydata->pasos_param[i].accion);
-		//calculo la longitud del array de ingredientes
-		int sizeArrayIngredientes = (int)( sizeof(mydata->pasos_param[i].ingredientes) / sizeof(mydata->pasos_param[i].ingredientes[0]) );
-		//indice para recorrer array de ingredientes
-		int h;
-		printf("\tEquipo %d -----------ingredientes : ----------\n",mydata->equipo_param); 
-			for(h = 0; h < sizeArrayIngredientes; h++) {
-				//consulto si la posicion tiene valor porque no se cuantos ingredientes tengo por accion 
-				if(strlen(mydata->pasos_param[i].ingredientes[h]) != 0) {
-							printf("\tEquipo %d ingrediente  %d : %s \n",mydata->equipo_param,h,mydata->pasos_param[i].ingredientes[h]);
-				}
-			}
-		}
-	}
+void* realizarAccion(int equipo, char *accionIn, char *ingrediente, FILE* salida) {
+	pthread_mutex_lock(&salida_mutex);
+	char buffer[128];
+	snprintf(buffer, sizeof(buffer), "Equipo : %d, Accion : %s, Ingrediente : %s", equipo, accionIn, ingrediente);
+	salida = fopen("resultado.txt", "at");
+	fprintf(salida, "%s\n", buffer);
+	fclose(salida);
+	printf("%s\n", buffer);
+	pthread_mutex_unlock(&salida_mutex);
 }
 
 //funcion para tomar de ejemplo
@@ -75,7 +61,7 @@ void* cortar(void *data) {
 	//creo el puntero para pasarle la referencia de memoria (data) del struct pasado por parametro (la cual es un puntero). 
 	struct parametro *mydata = data;
 	//llamo a la funcion imprimir le paso el struct y la accion de la funcion
-	imprimirAccion(mydata,accion);
+	realizarAccion(mydata,accion, null, null);
 	//uso sleep para simular que que pasa tiempo
 	usleep( 20000 );
 	//doy la señal a la siguiente accion (cortar me habilita mezclar)

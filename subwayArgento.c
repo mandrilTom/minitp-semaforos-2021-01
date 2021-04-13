@@ -35,9 +35,11 @@ struct paso {
 
 //creo los parametros de los hilos 
 struct parametro {
- int equipo_param;
- struct semaforos semaforos_param;
- struct paso pasos_param[8];
+	int equipo_param;
+	struct semaforos semaforos_param;
+	struct paso pasos_param[8];
+	FILE* receta;
+	FILE* resultado;
 };
 
 //funcion para imprimir las acciones y los ingredientes de la accion

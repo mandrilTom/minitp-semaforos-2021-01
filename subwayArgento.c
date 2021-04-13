@@ -22,9 +22,9 @@ struct semaforos {
 	sem_t sem_agregar_a_mezcla;
 	sem_t sem_empanar;
 	sem_t sem_cocinar;
-	sem_t armar_sandwich_milanesa;
-	sem_t armar_sandwich_pan;
-	sem_t armar_sandwich_extras;
+	sem_t sem_armar_sandwich_milanesa;
+	sem_t sem_armar_sandwich_pan;
+	sem_t sem_armar_sandwich_extras;
 };
 
 //creo los pasos con los ingredientes
@@ -67,19 +67,22 @@ void *accionTerminada(void *data, char *accionIn) {
 }
 
 //funcion para tomar de ejemplo
-void* cortar(void *data) {
+void* picar(void *data) {
 	//creo el nombre de la accion de la funcion 
-	char *accion = "cortar";
+	char *accion = "Picar";
 	//creo el puntero para pasarle la referencia de memoria (data) del struct pasado por parametro (la cual es un puntero). 
 	struct parametro *mydata = data;
 	//llamo a la funcion imprimir le paso el struct y la accion de la funcion
-	realizarAccion(mydata,accion, null, null);
+	realizarAccion(mydata->equipo_param, accion, mydata->pasos_param[0].ingredientes[0], mydata->resultado);
 	//uso sleep para simular que que pasa tiempo
-	usleep( 20000 );
-	//doy la señal a la siguiente accion (cortar me habilita mezclar)
-    sem_post(&mydata->semaforos_param.sem_mezclar);
-	
-    pthread_exit(NULL);
+	usleep( 10000 );
+	realizarAccion(mydata->equipo_param, accion, mydata->pasos_param[0].ingredientes[1], mydata->resultado);
+	usleep( 10000 );
+	//doy la señal a la siguiente accion (picar me habilita mezclar)
+	sem_post(&mydata->semaforos_param.sem_mezclar);
+	accionTerminada(mydata, accion);
+	sem_post(&mydata->semaforos_param.sem_mezclar);
+	pthread_exit(NULL);
 }
 
 void* ejecutarReceta(void *i) {

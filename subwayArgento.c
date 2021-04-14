@@ -132,6 +132,19 @@ void* empanar(void *data) {
 	pthread_exit(NULL);
 }
 
+void* cocinar(void *data) {
+	char *accion = "Cocinar";
+	struct parametro *mydata = data;
+	sem_wait(&mydata->semaforos_param.sem_cocinar);
+	pthread_mutex_lock(&sarten_mutex);
+	realizarAccion(mydata->equipo_param, accion, mydata->pasos_param[5].ingredientes[0], mydata->resultado);
+	usleep( 5000000 );
+	accionTerminada(mydata, accion);
+	pthread_mutex_unlock(&sarten_mutex);
+	sem_post(&mydata->semaforos_param.sem_armar_sandwich_milanesa);
+	pthread_exit(NULL);
+}
+
 void* ejecutarReceta(void *i) {
 	
 	//variables semaforos

@@ -110,6 +110,17 @@ void* salar(void *data) {
 	pthread_exit(NULL);
 }
 
+void* agregar_a_mezclar(void *data) {
+	char *accion = "Agregar a mezcla";
+	struct parametro *mydata = data;
+	sem_wait(&mydata->semaforos_param.sem_agregar_a_mezcla);
+	realizarAccion(mydata->equipo_param, accion, mydata->pasos_param[3].ingredientes[0], mydata->resultado);
+	usleep(3000000);
+	accionTerminada(mydata, accion);
+	sem_post(&mydata->semaforos_param.sem_empanar);
+	pthread_exit(NULL);
+}
+
 void* ejecutarReceta(void *i) {
 	
 	//variables semaforos

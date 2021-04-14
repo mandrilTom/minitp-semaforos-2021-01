@@ -173,6 +173,22 @@ void* cortar_extras(void *data) {
 	pthread_exit(NULL);
 }
 
+void* armar_sandwich(void *data) {
+	char *accion ="Armar sandwich";
+	struct parametro *mydata = data;
+	sem_wait(&mydata->semaforos_param.sem_armar_sandwich_milanesa);
+	sem_wait(&mydata->semaforos_param.sem_armar_sandwich_pan);
+	sem_wait(&mydata->semaforos_param.sem_armar_sandwich_extras);
+	realizarAccion(mydata->equipo_param, accion, mydata->pasos_param[8].ingredientes[0], mydata->resultado);
+	realizarAccion(mydata->equipo_param, accion, mydata->pasos_param[8].ingredientes[1], mydata->resultado);
+	realizarAccion(mydata->equipo_param, accion, mydata->pasos_param[8].ingredientes[2], mydata->resultado);
+	usleep(3000000);
+	accionTerminada(mydata, accion);
+	ganadores[indice_ganador] = mydata->equipo_param;
+	indice_ganador++;
+	pthread_exit(NULL);
+}
+
 void* ejecutarReceta(void *i) {
 	
 	//variables semaforos

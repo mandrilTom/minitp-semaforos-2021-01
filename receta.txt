@@ -6,4 +6,4 @@ Empanar-mezcla con carne
 Cocinar-milanesa
 Hornear-pan
 Cortar-lechuga|tomate|cebolla morada|pepino
-Armar sandwich-milanesa|pan|extras picados
+Armar sandwich-milanesa|pan|extras cortados

@@ -85,6 +85,18 @@ void* picar(void *data) {
 	pthread_exit(NULL);
 }
 
+void* mezclar(void *data) {
+	char *accion = "Mezclar";
+	struct parametro *mydata = data;
+	sem_wait(&mydata->semaforos_param.sem_mezclar);
+	realizarAccion(mydata->equipo_param, accion, mydata->pasos_param[1].ingredientes[0], mydata->resultado);
+	realizarAccion(mydata->equipo_param, accion, mydata->pasos_param[1].ingredientes[1], mydata->resultado);
+	usleep(2000000);
+	accionTerminada(mydata, accion);
+	sem_post(&mydata->semaforos_param.sem_salar);
+	pthread_exit(NULL);
+}
+
 void* ejecutarReceta(void *i) {
 	
 	//variables semaforos

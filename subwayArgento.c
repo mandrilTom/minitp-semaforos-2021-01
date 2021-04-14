@@ -157,6 +157,22 @@ void* hornear_pan(void *data) {
 	pthread_exit(NULL);
 }
 
+void* cortar_extras(void *data) {
+	char *accion = "Cortar";
+	struct parametro *mydata = data;
+	realizarAccion(mydata->equipo_param, accion, mydata->pasos_param[7].ingredientes[0], mydata->resultado);
+	usleep(1000000);
+	realizarAccion(mydata->equipo_param, accion, mydata->pasos_param[7].ingredientes[1], mydata->resultado);
+	usleep(1000000);
+	realizarAccion(mydata->equipo_param, accion, mydata->pasos_param[7].ingredientes[2], mydata->resultado);
+	usleep(1000000);
+	realizarAccion(mydata->equipo_param, accion, mydata->pasos_param[7].ingredientes[3], mydata->resultado);
+	usleep(1000000);
+	accionTerminada(mydata, accion);
+	sem_post(&mydata->semaforos_param.sem_armar_sandwich_extras);
+	pthread_exit(NULL);
+}
+
 void* ejecutarReceta(void *i) {
 	
 	//variables semaforos

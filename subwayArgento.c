@@ -145,6 +145,18 @@ void* cocinar(void *data) {
 	pthread_exit(NULL);
 }
 
+void* hornear_pan(void *data) {
+	char *accion ="Hornear";
+	struct parametro *mydata = data;
+	sem_wait(&sem_horno);
+	realizarAccion(mydata->equipo_param, accion, mydata->pasos_param[6].ingredientes[0], mydata->resultado);
+	usleep(10000000);
+	accionTerminada(mydata, accion);
+	sem_post(&sem_horno);
+	sem_post(&mydata->semaforos_param.sem_armar_sandwich_pan);
+	pthread_exit(NULL);
+}
+
 void* ejecutarReceta(void *i) {
 	
 	//variables semaforos

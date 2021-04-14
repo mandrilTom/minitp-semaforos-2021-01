@@ -11,6 +11,7 @@ pthread_mutex_t sarten_mutex;
 pthread_mutex_t salero_mutex;
 sem_t sem_horno;
 pthread_mutex_t salida_mutex;
+pthread_mutex_t ganadores_mutex;
 
 int ganadores[4];
 int indice_ganador;
@@ -184,8 +185,10 @@ void* armar_sandwich(void *data) {
 	realizarAccion(mydata->equipo_param, accion, mydata->pasos_param[8].ingredientes[2], mydata->resultado);
 	usleep(3000000);
 	accionTerminada(mydata, accion);
+	pthread_mutex_lock(&ganadores_mutex);
 	ganadores[indice_ganador] = mydata->equipo_param;
 	indice_ganador++;
+	pthread_mutex_unlock(&ganadores_mutex);
 	pthread_exit(NULL);
 }
 

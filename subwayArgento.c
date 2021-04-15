@@ -38,7 +38,7 @@ struct paso {
 struct parametro {
 	int equipo_param;
 	struct semaforos semaforos_param;
-	struct paso pasos_param[8];
+	struct paso pasos_param[9];
 	FILE* receta;
 	FILE* resultado;
 };
@@ -111,7 +111,7 @@ void* salar(void *data) {
 	pthread_exit(NULL);
 }
 
-void* agregar_a_mezclar(void *data) {
+void* agregar_a_mezcla(void *data) {
 	char *accion = "Agregar a mezcla";
 	struct parametro *mydata = data;
 	sem_wait(&mydata->semaforos_param.sem_agregar_a_mezcla);
@@ -334,7 +334,7 @@ void* ejecutarReceta(void *i) {
 
 	rc = pthread_create(&p7,                           //identificador unico
 							NULL,                          //atributos del thread
-								hornear,             //funcion a ejecutar
+								hornear_pan,             //funcion a ejecutar
 								pthread_data);                     //parametros de la funcion a ejecutar, pasado por referencia	
 	if (rc) {
 		printf("Error: unable to create thread, %d \n", rc);
@@ -343,7 +343,7 @@ void* ejecutarReceta(void *i) {
 
 	rc = pthread_create(&p8,                           //identificador unico
 							NULL,                          //atributos del thread
-								cortar,             //funcion a ejecutar
+								cortar_extras,             //funcion a ejecutar
 								pthread_data);                     //parametros de la funcion a ejecutar, pasado por referencia	
 	if (rc) {
 		printf("Error: unable to create thread, %d \n", rc);

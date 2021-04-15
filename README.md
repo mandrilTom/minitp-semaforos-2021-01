@@ -1,6 +1,6 @@
 # SOR-Semáforos-1S-2021
 
-## TMini TP de semáforos
+## Mini TP de semáforos
 
 ### Alumno: Tomas Eduardo Esteban Mandril
 ### Legajo: 40142645/2017
